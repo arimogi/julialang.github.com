@@ -4,7 +4,7 @@ title:  "Generalizing AbstractArrays: opportunities and challenges"
 author: <a href="http://holylab.wustl.edu">Tim Holy</a>
 ---
 
-# Introduction: generic algorithms with AbstractArrays
+## Introduction: generic algorithms with AbstractArrays
 
 Somewhat unusually, this blog post is future-looking: it mostly
 focuses on things that don't yet exist. Its purpose is to lay out the
@@ -35,7 +35,7 @@ write a wide variety of efficient, generic higher-level functions.
 Naturally, as the diversity of array types grows, the more careful we
 have to be about our abstractions for these low-level operations.
 
-# Examples of arrays
+## Examples of arrays
 
 In discussing general operations on arrays, it's useful to have a
 diverse collection of concrete arrays in mind.
@@ -87,7 +87,7 @@ arrays, including:
 - `DistributedArrays`: another great example of a case in which you
   need to think through access patterns carefully
 
-# SubArrays: a case study
+## SubArrays: a case study
 
 For arrays of fixed dimension, one can write algorithms that index
 arrays as `A[i,j,k,...]` (good examples can be found in our linear
@@ -150,11 +150,11 @@ Unfortunately, I suspect that if we want to add support for certain
 new operations or types (specific examples below), it will force us to
 set the latter problem on fire.
 
-# Challenging examples
+## Challenging examples
 
 Some possible new `AbstractArray` types pose novel challenges.
 
-## ReshapedArrays ([#15449](https://github.com/JuliaLang/julia/pull/15449))
+### ReshapedArrays ([#15449](https://github.com/JuliaLang/julia/pull/15449))
 
 These are the front-and-center motivation for this post. These are
 motivated by a desire to ensure that `reshape(A, dims)` always returns
@@ -226,7 +226,7 @@ However, a big problem is that compared to the "naive" implementation,
 this is rather ugly.
 
 
-## Row-major matrices, PermutedDimensionArrays, and "taking transposes seriously"
+### Row-major matrices, PermutedDimensionArrays, and "taking transposes seriously"
 
 Julia's `Array` type stores its entries in column-major order, meaning
 that `A[i,j]` and `A[i+1,j]` are in adjacent memory locations.  For
@@ -334,7 +334,7 @@ In other words, without careful design the goals of
 "maximally-efficient iteration" and "keeping accesses in-sync" are in
 conflict.
 
-## OffsetArrays and the meaning of AbstractArray
+### OffsetArrays and the meaning of AbstractArray
 
 Julia's arrays are indexed starting at 1, whereas some other languages
 start numbering at 0. If you take comments on various blog posts at
@@ -378,7 +378,7 @@ associative containers, where each index-tuple is the "key" by which
 one retrieves a value.  With this mode of thinking, `src[1]` should be
 stored in `dest[1]`.
 
-# Formalizing AbstractArray
+## Formalizing AbstractArray
 
 These examples suggest a formalization of `AbstractArray`:
 
@@ -415,7 +415,7 @@ These examples suggest a formalization of `AbstractArray`:
   `CartesianRange` and `RowMajorRange` iterators that access elements
   in different orders.
 
-# Finding a way forward
+## Finding a way forward
 
 Resolving these conflicting demands is not easy. One approach might be
 to decree that some of these array types simply can't be supported
