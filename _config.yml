@@ -27,3 +27,4 @@ navigation:
     title: GSoC
   - url: "http://juliacon.org"
     title: juliacon
+baseurl: "http://mortenpi.eu/julialang.github.com/"
